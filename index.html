@@ -65,7 +65,7 @@
             const ipToInt32 = (ip) => ip.split(".").reduce((int, v) => int * 256 + +v);
             const byId = (id) => document.getElementById(id);
             const adjustColor = (color, amount) => '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
-            
+
             // TODO: config
             const IP = "127.0.0.1";
             const PORT = "80";
@@ -102,7 +102,7 @@
         </script>
     </head>
     <body>
-        <canvas id="snake-canvas">Your browser does not support canvas.</canvas>
+    <canvas id="snake-canvas">Your browser does not support canvas.</canvas>
         <div id="ui" style="bottom: 0; padding-bottom: 6px;">
             <table id="player-table" style="float: left; display: inline-block; width:auto; margin-left: auto; text-align: left"><tr style="width:auto; justify-content: center">
                 <tr><td>Player 1</td><td>0</td></tr>
