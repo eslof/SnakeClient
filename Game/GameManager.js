@@ -26,7 +26,7 @@ class GameManager {
     onMessage(e) {
         const gameData = this.gameData;
         const playerManager = this.playerManager;
-        Object.assign(gameData, JSON.parse(e.data));
+        gameData.update(e.data);
         if (gameData.players.length > 0) playerManager.update(gameData.players);
         if (gameData.board.length > 0) this.boardManager.update(gameData.board);
     };
