@@ -14,11 +14,9 @@ class EntityBase {
     direction;
     entityType;
 
-    constructor(gameData, entityData, realX, realY) {
+    constructor(gameData, entityData) {
         Object.assign(this, entityData);
         this.gameData = gameData;
-        this.realX = realX;
-        this.realY = realY;
     }
 
     getUpcast() {

@@ -7,31 +7,31 @@ class PlayerEntity extends EntityBase {
     fd;
     playerType;
 
-    draw() {
-        if (this.playerType === PlayerType.Head) this.drawHead();
-        else if (this.playerType === PlayerType.Body) this.drawBody()
+    draw(realX, realY) {
+        if (this.playerType === PlayerType.Head) this.drawHead(realX, realY);
+        else if (this.playerType === PlayerType.Body) this.drawBody(realX, realY)
     }
 
-    drawBody() {
+    drawBody(realX, realY) {
         const canvasManager = this.gameData.canvasManager;
         const players = this.gameData.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
-        const realX = this.realX-size;
-        const realY = this.realY-size;
+        realX -= size;
+        realY -= size;
         context.beginPath();
         context.rect(realX, realY, size, size);
         context.fillStyle = players[this.fd].bodyColor;
         context.fill();
     }
 
-    drawHead() {
+    drawHead(realX, realY) {
         const canvasManager = this.gameData.canvasManager;
         const players = this.gameData.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
-        let realX = this.realX-size/2;
-        let realY = this.realY-size/2;
+        realX -= size/2;
+        realY -= size/2;
         const direction = this.direction;
         const rotateAngle = (Math.PI / 180) * (
             direction === Direction.Left ? 90

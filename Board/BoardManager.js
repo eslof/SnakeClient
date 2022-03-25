@@ -36,8 +36,8 @@ class BoardManager {
                 }
 
                 const entityData = boardData[xStr][yStr][0]; //for now
-                this.entities[entityKey] = new EntityBase(gameData, entityData, realX, realY).getUpcast();
-                this.entities[entityKey].draw();
+                this.entities[entityKey] = new EntityBase(gameData, entityData).getUpcast();
+                this.entities[entityKey].draw(realX, realY);
             }
         }
     }
@@ -51,7 +51,7 @@ class BoardManager {
                 const realY = canvasManager.translateToRealY(y);
                 this.drawBackgroundAt(x, y, realX, realY);
                 const entityKey = x + '.' + y;
-                if (entityKey in this.entities) this.entities[entityKey].draw();
+                if (entityKey in this.entities) this.entities[entityKey].draw(realX, realY);
             }
         }
     }

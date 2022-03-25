@@ -2,11 +2,11 @@ class FoodEntity extends EntityBase {
     scoreValue;
     sizeValue;
 
-    draw() {
+    draw(realX, realY) {
         const context = this.canvasManager.context;
         const size = this.canvasManager.squareSize;
-        const realX = this.realX -size/2;
-        const realY = this.realY -size/2;
+        realX -= size/2;
+        realY -= size/2;
         context.beginPath();
         const gradient = context.createRadialGradient(realX, realY, size/10, realX-(size/2), realY-(size/2), size);
 
