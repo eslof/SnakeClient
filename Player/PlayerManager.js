@@ -17,15 +17,19 @@ class PlayerManager {
 
     updatePlayers(playerData) {
         const players = this.players;
+        let joinCallback = this.onPlayerJoin || function () {};
+        let leaveCallback = this.onPlayerLeave || function () {};
+        if (!(joinCallback instanceof Function)) throw new InternalMisuseError("onPlayerJoin set to other than function or null.");
+        if (!(leaveCallback instanceof Function)) throw new InternalMisuseError("onPlayerLeave set to other than function or null.");
         for (let fd in playerData) {
             if (fd in players) players[fd].update(playerData[fd]);
             else {
                 players[fd] = new Player(playerData[fd]);
-                if (this.onPlayerJoin != null) this.onPlayerJoin();
+                joinCallback();
             }
             if (players[fd].health === 0) {
                 players[fd].onDelete();
-                if (this.onPlayerLeave != null) this.onPlayerLeave();
+                leaveCallback();
                 delete players[fd];
             }
         }
