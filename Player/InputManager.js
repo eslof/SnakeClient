@@ -12,7 +12,6 @@ class InputManager {
         68: Input.Right //key D
     };
     pressed = {};
-    currentInput = Input.None;
 
     constructor(websocket) {
         this.websocket = websocket;
