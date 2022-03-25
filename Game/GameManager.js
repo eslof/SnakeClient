@@ -8,9 +8,9 @@ class GameManager {
         this.joinButton = joinButton;
         this.joinInput = joinInput;
         this.websocket = websocket;
-        joinButton.onclick = this.requestJoin;
-        playerManager.onPlayerJoin = this.updateJoinUI;
-        playerManager.onPlayerLeave = this.updateJoinUI;
+        joinButton.onclick = () => this.requestJoin();
+        playerManager.onPlayerJoin = () => this.updateJoinUI();
+        playerManager.onPlayerLeave = () => this.updateJoinUI();
     }
 
     requestJoin() {
@@ -37,6 +37,7 @@ class GameManager {
     };
 
     onResize(e) {
+        console.log("hell?");
         this.canvasManager.update();
         this.canvasManager.clear();
         this.boardManager.drawFull();

@@ -93,10 +93,10 @@
                 // TODO: put join stuff somewhere other than game manager
                 const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput, websocket);
 
-                websocket.onmessage = gameManager.onMessage;
-                window.onresize = gameManager.onResize;
-                window.onkeydown = inputManager.onKeyDown;
-                window.onkeyup = inputManager.onKeyUp;
+                websocket.onmessage = () => gameManager.onMessage();
+                window.onresize = () => gameManager.onResize();
+                window.onkeydown = () => inputManager.onKeyDown();
+                window.onkeyup = () => inputManager.onKeyUp();
 
                 boardManager.drawFull();
             };
