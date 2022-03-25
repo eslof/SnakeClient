@@ -97,6 +97,7 @@
                 window.onresize = () => gameManager.onResize();
 
                 websocket.onopen = () => {
+                    // TODO: shouldn't let the client spam server unless actually joined
                     window.onkeydown = (e) => inputManager.onKeyDown(e);
                     window.onkeyup = (e) => inputManager.onKeyUp(e);
                 };

@@ -15,6 +15,7 @@ class GameManager {
 
     requestJoin() {
         this.websocket.send(Request.getJoinRequest(this.joinInput.value));
+        // TODO: handle on join success/fail
     }
 
     updateJoinUI() {
