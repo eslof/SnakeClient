@@ -7,6 +7,7 @@ class GameManager {
         this.playerManager = playerManager;
         this.joinButton = joinButton;
         this.joinInput = joinInput;
+        // TODO: joinButton.onclick
         playerManager.onPlayerJoin = this.updateJoinUI;
         playerManager.onPlayerLeave = this.updateJoinUI;
     }
