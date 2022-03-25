@@ -95,8 +95,8 @@
 
                 websocket.onmessage = () => gameManager.onMessage();
                 window.onresize = () => gameManager.onResize();
-                window.onkeydown = () => inputManager.onKeyDown();
-                window.onkeyup = () => inputManager.onKeyUp();
+                window.onkeydown = (e) => inputManager.onKeyDown(e);
+                window.onkeyup = (e) => inputManager.onKeyUp(e);
 
                 boardManager.drawFull();
             };
