@@ -13,7 +13,10 @@ class BoardManager {
             this.backgroundColors.push([]);
             for (let y = 0; y < gridSize; y++) {
                 this.backgroundColors[x].push(adjustColor(baseColor, Math.floor(seededRandom() * 30)-15));
-                //this.backgroundColors[x].push(backgroundPalette[Math.floor(seededRandom() * backgroundPalette.length)]);
+                // todo: if this turns out memory intensive (which it probably is, "#CCCCCC' * gridSize * gridSize = ...
+                //  but for 50x50 that's still... 26.86 KB... maybe at 500x500 where it's 2.6mb?...
+                //  also maybe: this.backgroundColors[x].push(backgroundPalette[Math.floor(seededRandom() * backgroundPalette.length)]);
+                //  with a palette we can just save palette index instead
             }
         }
     }
