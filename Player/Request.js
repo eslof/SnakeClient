@@ -8,13 +8,13 @@ class Request {
         let ret = {};
         ret.request = RequestType.INPUT;
         ret.input = input;
-        return ret;
+        return JSON.stringify(ret);
     }
 
     static getJoinRequest(name) {
         let ret = {};
         ret.request = RequestType.JOIN;
         ret.name = name;
-        return ret;
+        return JSON.stringify(ret);
     }
 }
