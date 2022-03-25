@@ -73,24 +73,24 @@
                 const websocket = new WebSocket("wss://"+IP+":"+PORT);
 
                 // TODO: config, maybe pass these from server
-                let backgroundDesert = '#ECB978';
-                let backgroundGrass = '#458a32';
-                let backgroundSeed = ipToInt32(IP);
-                let gridSize = 30;
-                let maxPlayers = 5;
+                const backgroundDesert = '#ECB978';
+                const backgroundGrass = '#458a32';
+                const backgroundSeed = ipToInt32(IP);
+                const gridSize = 30;
+                const maxPlayers = 5;
 
-                let playerTable = byId('player-table');
-                let playerManager = new PlayerManager(playerTable, maxPlayers);
-                let inputManager = new InputManager(websocket);
+                const playerTable = byId('player-table');
+                const playerManager = new PlayerManager(playerTable, maxPlayers);
+                const inputManager = new InputManager(websocket);
 
-                let canvas = byId('snake-canvas');
-                let canvasManager = new CanvasManager(canvas, gridSize);
-                let boardManager = new BoardManager(canvasManager, backgroundDesert, backgroundSeed);
+                const canvas = byId('snake-canvas');
+                const canvasManager = new CanvasManager(canvas, gridSize);
+                const boardManager = new BoardManager(canvasManager, backgroundDesert, backgroundSeed);
 
-                let gameData = new GameData();
-                let joinButton = byId('join-button');
-                let joinInput = byId('join-input');
-                let gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput);
+                const gameData = new GameData();
+                const joinButton = byId('join-button');
+                const joinInput = byId('join-input');
+                const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput);
 
                 websocket.onmessage = gameManager.onMessage;
                 window.onresize = gameManager.onResize;
