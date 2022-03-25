@@ -27,12 +27,14 @@ class InputManager {
 
     onKeyDown(e) {
         const keyCode = e.keyCode || e.which;
+        if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = this.keyMap[keyCode];
         this.websocket.send(Request.getInputRequest(this.getInput()));
     }
 
     onKeyUp(e) {
         const keyCode = e.keyCode || e.which;
+        if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = null;
         this.websocket.send(Request.getInputRequest(this.getInput()));
     }
