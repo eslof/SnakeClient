@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+
+            * {
+                margin:0;
+                padding:0;
+                -ms-overflow-style: none; /* for Internet Explorer, Edge */
+                scrollbar-width: none; /* for Firefox */
+                overflow-y: scroll;
+                font-family: Courier, monospace;
+                font-weight: bold;
+                font-size: 2.5vmin;
+            }
+
+            *::-webkit-scrollbar {
+                display: none; /* for Chrome, Safari, and Opera */
+            }
+            td, tr {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+
+            #ui {
+                z-index:2;
+                position: absolute;
+                text-align: center;
+                left:0;
+                right:0;
+
+            }
+            #snake-canvas {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                z-index: -1;
+            }
+
+            #join-container {
+                margin-left: auto;
+                display: inline-block;
+                height: auto;
+                float:bottom;
+                position:absolute;
+                bottom: 0;
+                margin-bottom: 6px;
+                width: 150px;
+            }
+        </style>
+        <script src="Board/BoardManager.js"></script>
+        <script src="Entity/Base/EntityBase.js"></script>
+        <script src="Entity/FoodEntity.js"></script>
+        <script src="Entity/PlayerEntity.js"></script>
+        <script src="Game/CanvasManager.js"></script>
+        <script src="Game/GameData.js"></script>
+        <script src="Game/GameManager.js"></script>
+        <script src="Player/InputManager.js"></script>
+        <script src="Player/Player.js"></script>
+        <script src="Player/PlayerManager.js"></script>
+        <script src="Player/Request.js"></script>
+        <script>
+            const ipToInt32 = (ip) => ip.split(".").reduce((int, v) => int * 256 + +v);
+            const byId = (id) => document.getElementById(id);
+            const adjustColor = (color, amount) => '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+            
+            // TODO: config
+            const IP = "127.0.0.1";
+            const PORT = "80";
+            window.onload = () => {
+                const websocket = new WebSocket("wss://"+IP+":"+PORT);
+
+                // TODO: config, maybe pass these from server
+                let backgroundDesert = '#ECB978';
+                let backgroundGrass = '#458a32';
+                let backgroundSeed = ipToInt32(IP);
+                let gridSize = 30;
+                let maxPlayers = 5;
+
+                let playerTable = byId('player-table');
+                let playerManager = new PlayerManager(playerTable, maxPlayers);
+                let inputManager = new InputManager(websocket);
+
+                let canvas = byId('snake-canvas');
+                let canvasManager = new CanvasManager(canvas, gridSize);
+                let boardManager = new BoardManager(canvasManager, backgroundDesert, backgroundSeed);
+
+                let gameData = new GameData();
+                let joinButton = byId('join-button');
+                let joinInput = byId('join-input');
+                let gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput);
+
+                websocket.onmessage = gameManager.onMessage;
+                window.onresize = gameManager.onResize;
+                window.onkeydown = inputManager.onKeyDown;
+                window.onkeyup = inputManager.onKeyUp;
+
+                boardManager.drawFull();
+            };
+        </script>
+    </head>
+    <body>
+        <canvas id="snake-canvas">Your browser does not support canvas.</canvas>
+        <div id="ui" style="bottom: 0; padding-bottom: 6px;">
+            <table id="player-table" style="float: left; display: inline-block; width:auto; margin-left: auto; text-align: left"><tr style="width:auto; justify-content: center">
+                <tr><td>Player 1</td><td>0</td></tr>
+                <tr><td>Player 2</td><td>0</td></tr>
+                <tr><td>Player 3</td><td>0</td></tr>
+                <tr><td>Player 4</td><td>0</td></tr>
+                <tr><td>Player 5</td><td>0</td></tr>
+            </table>
+            <div id="join-container">
+                <input type="text" id="join-input" name="name" />
+                <button id="join-button" type="submit">Join</button>
+            </div>
+        </div>
+    </body>
+</html>
