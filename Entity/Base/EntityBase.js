@@ -20,7 +20,7 @@ class EntityBase {
     }
 
     getUpcast() {
-        if (Object.getPrototypeOf(this) !== EntityBase.prototype) return this;
+        if (Object.getPrototypeOf(this) !== EntityBase.prototype) throw new InternalMisuseError("Attempting to upcast a child instance.");
         switch (this.entityType) {
             case EntityType.Player:
                 return Object.assign(new PlayerEntity(), this);
