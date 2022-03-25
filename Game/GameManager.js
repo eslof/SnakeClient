@@ -1,15 +1,20 @@
 class GameManager {
 
-    constructor(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput) {
+    constructor(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput, websocket) {
         this.boardManager = boardManager;
         this.canvasManager = canvasManager;
         this.gameData = gameData;
         this.playerManager = playerManager;
         this.joinButton = joinButton;
         this.joinInput = joinInput;
-        // TODO: joinButton.onclick
+        this.websocket = websocket;
+        joinButton.onclick = this.requestJoin;
         playerManager.onPlayerJoin = this.updateJoinUI;
         playerManager.onPlayerLeave = this.updateJoinUI;
+    }
+
+    requestJoin() {
+        this.websocket.send(Request.getJoinRequest(this.joinInput.value));
     }
 
     updateJoinUI() {
