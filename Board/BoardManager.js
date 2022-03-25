@@ -47,12 +47,10 @@ class BoardManager {
         const gridSize = canvasManager.gridSize;
         for (let x = 0; x < gridSize; x++) {
             const realX = canvasManager.translateToRealX(x);
-            const xStr = x.toString()
             for (let y = 0; y < gridSize; y++) {
                 const realY = canvasManager.translateToRealY(y);
-                const yStr = y.toString();
                 this.drawBackgroundAt(x, y, realX, realY);
-                const entityKey = xStr + '.' + yStr;
+                const entityKey = x + '.' + y;
                 if (entityKey in this.entities) this.entities[entityKey].draw();
             }
         }
