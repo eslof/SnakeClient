@@ -1,22 +1,24 @@
 class BoardManager {
-    backgroundColors = [];
+    colorPalette = [];
+    colorIndexGrid = [];
     entities = [];
     canvasManager;
 
     constructor(canvasManager, baseColor, seed) {
+        const paletteCount = 7;
+        const paletteSpread = 50;
+        for (let i = 0; i < paletteCount; i++) {
+            this.colorPalette.push(adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
+        }
         this.canvasManager = canvasManager;
         const gridSize = canvasManager.gridSize;
         //from https://gist.github.com/blixt/f17b47c62508be59987b?permalink_comment_id=2682175#gistcomment-2682175
         const LCG=s=>()=>(2**31-1&(s=Math.imul(48271,s)))/2**31;
         const seededRandom = LCG(seed);
         for (let x = 0; x < gridSize; x++) {
-            this.backgroundColors.push([]);
+            this.colorIndexGrid.push([]);
             for (let y = 0; y < gridSize; y++) {
-                this.backgroundColors[x].push(adjustColor(baseColor, Math.floor(seededRandom() * 30)-15));
-                // todo: if this turns out memory intensive (which it probably is, "#CCCCCC' * gridSize * gridSize = ...
-                //  but for 50x50 that's still... 26.86 KB... maybe at 500x500 where it's 2.6mb?...
-                //  also maybe: this.backgroundColors[x].push(backgroundPalette[Math.floor(seededRandom() * backgroundPalette.length)]);
-                //  with a palette we can just save palette index instead
+                this.colorIndexGrid[x].push( Math.floor(seededRandom() * this.colorPalette.length));
             }
         }
     }
@@ -64,7 +66,7 @@ class BoardManager {
         const size = this.canvasManager.squareSize;
         context.beginPath();
         context.rect(realX, realY, size, size);
-        context.fillStyle = this.backgroundColors[gridX][gridY];
+        context.fillStyle = this.colorPalette[this.colorIndexGrid[gridX][gridY]];
         context.fill();
     }
 }
