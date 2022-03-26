@@ -37,7 +37,7 @@ class BoardManager {
             for (let yStr in boardData[xStr]) {
                 const y = parseInt(yStr);
                 const realY = canvasManager.translateToRealY(y);
-                this.drawBackgroundAt(x, y, realX, realY);
+                this._drawBackgroundAt(x, y, realX, realY);
                 const entityKey = xStr+'.'+yStr;
 
                 if (boardData[xStr][yStr].length === 0) {
@@ -59,14 +59,15 @@ class BoardManager {
             const realX = canvasManager.translateToRealX(x);
             for (let y = 0; y < gridSize; y++) {
                 const realY = canvasManager.translateToRealY(y);
-                this.drawBackgroundAt(x, y, realX, realY);
+                this._drawBackgroundAt(x, y, realX, realY);
                 const entityKey = x + '.' + y;
                 if (entityKey in this.entities) this.entities[entityKey].draw(realX, realY);
             }
         }
     }
 
-    drawBackgroundAt(gridX, gridY, realX, realY) {
+    // path-sensitive function
+    _drawBackgroundAt(gridX, gridY, realX, realY) {
         const context = this.canvasManager.context;
         const size = this.canvasManager.squareSize;
         context.beginPath();

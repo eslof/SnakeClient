@@ -21,23 +21,23 @@ class InputManager {
         this.pressed[Input.RIGHT] = null;
     }
 
-    getInput() {
-        let isLeft = this.pressed[Input.LEFT];
-        let isRight = this.pressed[Input.RIGHT];
-        return isLeft && isRight ? Input.NONE : isLeft ?? isRight ?? Input.NONE;
-    }
-
     onKeyDown(e) {
         const keyCode = e.keyCode || e.which; // TODO: deprecated use > e.code "ArrowLeft" et.c.
         if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = this.keyMap[keyCode];
-        this.webSocket.send(Request.getInputRequest(this.getInput()));
+        this.webSocket.send(Request.getInputRequest(this._getInput()));
     }
 
     onKeyUp(e) {
         const keyCode = e.keyCode || e.which;
         if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = null;
-        this.webSocket.send(Request.getInputRequest(this.getInput()));
+        this.webSocket.send(Request.getInputRequest(this._getInput()));
+    }
+
+    _getInput() {
+        let isLeft = this.pressed[Input.LEFT];
+        let isRight = this.pressed[Input.RIGHT];
+        return isLeft && isRight ? Input.NONE : isLeft ?? isRight ?? Input.NONE;
     }
 }

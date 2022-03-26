@@ -11,23 +11,14 @@ class CanvasManager {
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
         this.gridSize = gridSize;
-        this.updateMeasurements();
-        this.updateCanvasSize();
+        this.update();
     }
 
     clear=()=>this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
 
     update() {
-        this.updateMeasurements();
-        this.updateCanvasSize();
-    }
-
-    updateMeasurements() {
-        const maxGridSize = Math.min(window.innerHeight, window.innerWidth);
-        this.marginX = (maxGridSize - window.innerWidth) / 2;
-        this.marginY = (maxGridSize - window.innerHeight) / 2;
-        this.squareDistance = maxGridSize / this.gridSize;
-        this.squareSize = Math.round(this.squareDistance+1); // TODO: figure out what causes the gaps
+        this._updateMeasurements();
+        this._updateCanvasSize();
     }
 
     translateToRealX(gridX) {
@@ -46,7 +37,7 @@ class CanvasManager {
         return [realX, realY];
     }
 
-    updateCanvasSize() {
+    _updateCanvasSize() {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const canvas = this.canvas;
@@ -56,5 +47,13 @@ class CanvasManager {
         canvas.setAttribute('height', height);
         canvas.width = width;
         canvas.height = height;
+    }
+
+    _updateMeasurements() {
+        const maxGridSize = Math.min(window.innerHeight, window.innerWidth);
+        this.marginX = (maxGridSize - window.innerWidth) / 2;
+        this.marginY = (maxGridSize - window.innerHeight) / 2;
+        this.squareDistance = maxGridSize / this.gridSize;
+        this.squareSize = Math.round(this.squareDistance+1); // TODO: figure out what causes the gaps
     }
 }

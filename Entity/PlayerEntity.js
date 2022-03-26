@@ -8,11 +8,11 @@ class PlayerEntity extends EntityBase {
     playerType;
 
     draw(realX, realY) {
-        if (this.playerType === PlayerType.HEAD) this.drawHead(realX, realY);
-        else if (this.playerType === PlayerType.BODY) this.drawBody(realX, realY)
+        if (this.playerType === PlayerType.HEAD) this._drawHead(realX, realY);
+        else if (this.playerType === PlayerType.BODY) this._drawBody(realX, realY)
     }
 
-    drawBody(realX, realY) {
+    _drawBody(realX, realY) {
         const canvasManager = this.gameData.canvasManager;
         const players = this.gameData.playerManager.players;
         const context = canvasManager.context;
@@ -25,7 +25,7 @@ class PlayerEntity extends EntityBase {
         context.fill();
     }
 
-    drawHead(realX, realY) {
+    _drawHead(realX, realY) {
         const canvasManager = this.gameData.canvasManager;
         const players = this.gameData.playerManager.players;
         const context = canvasManager.context;
