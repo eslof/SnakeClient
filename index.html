@@ -40,14 +40,17 @@
             }
 
             #join-container {
-                margin-left: auto;
                 display: inline-block;
                 height: auto;
                 float:bottom;
                 position:absolute;
-                bottom: 0;
-                margin-bottom: 6px;
-                width: 150px;
+                bottom: 6px;
+                margin-left: -36px; /* Puts it right at the corner of a square canvas + -5px */
+                width: auto;
+            }
+
+            #join-input {
+                width: 146px;
             }
         </style>
         <script src="InternalMisuseError.js"></script>
@@ -66,19 +69,22 @@
         <script src="UI/PlayerTable.js"></script>
         <script>
             const ipToInt32 = (ip) => ip.split(".").reduce((int, v) => int * 256 + +v);
+            //const byId = document.getElementById.bind(document);
             const byId = (id) => document.getElementById(id);
             const adjustColor = (color, amount) => '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
             const isHexColor = (hex) => (typeof hex != 'string' || !(hex instanceof String))
                 && hex.charAt(0) === '#'
                 && hex.length === 7
-                && !isNaN(Number('0x' + hex.substring(1)));
+                && Number.isInteger(Number('0x' + hex.substring(1)));
+            const isObject = (v) => (!!v) && (v.constructor === Object);
+
 
             // TODO: config
             const IP = "127.0.0.1";
             const PORT = "80";
             // TODO: maybe I'll go with addListener but by design I want to control the handler in a singular manner for now
             window.onload = () => {
-                const websocket = new WebSocket("wss://"+IP+":"+PORT);
+                const webSocket = new WebSocket("wss://"+IP+":"+PORT);
 
                 // TODO: config, maybe pass these from server
                 const backgroundDesert = '#ECB978';
@@ -87,33 +93,37 @@
                 const gridSize = 30;
                 const maxPlayers = 5;
 
-                const playerTable = byId('player-table');
-                const playerManager = new PlayerManager(playerTable, maxPlayers);
-                const inputManager = new InputManager(websocket);
-
-                const canvas = byId('snake-canvas');
-                const canvasManager = new CanvasManager(canvas, gridSize);
-                const boardManager = new BoardManager(canvasManager, backgroundDesert, backgroundSeed);
-
                 const gameData = new GameData();
-                const joinButton = byId('join-button');
-                const joinInput = byId('join-input');
-                // TODO: put join stuff somewhere other than game manager
-                const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager, joinButton, joinInput, websocket);
 
-                websocket.onmessage = () => gameManager.onMessage();
+                const canvasEl = byId('snake-canvas');
+                const canvasManager = new CanvasManager(canvasEl, gridSize);
+                const boardManager = new BoardManager(backgroundDesert, canvasManager, gameData, backgroundSeed);
+
+                const joinContainerEl = byId('join-container');
+                const joinButtonEl = byId('join-button');
+                const joinInputEl = byId('join-input');
+                const joinForm = new JoinForm(joinContainerEl, joinButtonEl, joinInputEl, webSocket);
+
+                const playerTableEl = byId('player-table');
+                const playerTable = new PlayerTable(maxPlayers, playerTableEl)
+                const playerManager = new PlayerManager(gameData, joinForm, maxPlayers, playerTable);
+                const inputManager = new InputManager(webSocket);
+
+                const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager);
+
+                webSocket.onmessage = () => gameManager.onMessage();
                 window.onresize = () => gameManager.onResize();
 
-                websocket.onopen = () => {
+                webSocket.onopen = () => {
                     // TODO: shouldn't let the client spam server unless actually joined
                     //   and join controller
                     window.onkeydown = (e) => inputManager.onKeyDown(e);
                     window.onkeyup = (e) => inputManager.onKeyUp(e);
                 };
 
-                websocket.onclose = () => {
-                    websocket.onopen = null;
-                    websocket.onclose = null;
+                webSocket.onclose = () => {
+                    webSocket.onopen = null;
+                    webSocket.onclose = null;
                 };
 
                 boardManager.drawFull();
