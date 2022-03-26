@@ -5,6 +5,9 @@ class CanvasManager {
     marginY;
 
     constructor(canvas, gridSize) {
+        if (!(canvas instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for canvas.");
+        if (!Number.isInteger(gridSize)) throw new InternalMisuseError("Wrong parameter type for gridSize.");
+
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
         this.gridSize = gridSize;

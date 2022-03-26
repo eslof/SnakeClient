@@ -9,6 +9,9 @@ class Player {
     score;
 
     constructor(context, playerData) {
+        if (!(context instanceof CanvasRenderingContext2D)) throw new InternalMisuseError("Wrong parameter type for context.");
+        if (!isObject(playerData)) throw new InternalMisuseError("Wrong parameter type for playerData.");
+
         this.update(playerData);
         this.context = context;
         this.bodyColor = Player.colors.pop();

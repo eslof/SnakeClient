@@ -13,8 +13,10 @@ class InputManager {
     };
     pressed = {};
 
-    constructor(websocket) {
-        this.websocket = websocket;
+    constructor(webSocket) {
+        if (!(webSocket instanceof WebSocket)) throw new InternalMisuseError("Wrong parameter type for webSocket.");
+
+        this.webSocket = webSocket;
         this.pressed[Input.Left] = null;
         this.pressed[Input.Right] = null;
     }
@@ -29,13 +31,13 @@ class InputManager {
         const keyCode = e.keyCode || e.which; // TODO: deprecated use > e.code "ArrowLeft" et.c.
         if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = this.keyMap[keyCode];
-        this.websocket.send(Request.getInputRequest(this.getInput()));
+        this.webSocket.send(Request.getInputRequest(this.getInput()));
     }
 
     onKeyUp(e) {
         const keyCode = e.keyCode || e.which;
         if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = null;
-        this.websocket.send(Request.getInputRequest(this.getInput()));
+        this.webSocket.send(Request.getInputRequest(this.getInput()));
     }
 }

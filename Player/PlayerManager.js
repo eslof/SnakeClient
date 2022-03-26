@@ -2,6 +2,11 @@ class PlayerManager {
     players = [];
 
     constructor(gameData, joinForm, maxPlayers, playerTable) {
+        if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
+        if (!(playerTable instanceof PlayerTable)) throw new InternalMisuseError("Wrong parameter type for playerTable.");
+        if (!(joinForm instanceof JoinForm)) throw new InternalMisuseError("Wrong parameter type for joinForm.");
+        if (!Number.isInteger(maxPlayers)) throw new InternalMisuseError("Wrong parameter type for maxPlayers.");
+
         this.gameData = gameData;
         this.maxPlayers = maxPlayers;
         this.playerTable = playerTable;
