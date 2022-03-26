@@ -4,7 +4,7 @@ class BoardManager {
     entities = [];
 
     constructor(baseColor, canvasManager, gameData, seed) {
-        if (!isHexColor(baseColor)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
+        if (!Utils.isHexColor(baseColor)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
         if (!Number.isInteger(seed)) throw new InternalMisuseError("Wrong parameter type for seed.");
@@ -12,7 +12,7 @@ class BoardManager {
         const paletteCount = 7;
         const paletteSpread = 50;
         for (let i = 0; i < paletteCount; i++) {
-            this.colorPalette.push(adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
+            this.colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
         }
         this.canvasManager = canvasManager;
         this.gameData = gameData;
