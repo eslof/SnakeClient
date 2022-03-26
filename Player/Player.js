@@ -10,12 +10,14 @@ class Player {
 
     constructor(context, playerData) {
         if (!(context instanceof CanvasRenderingContext2D)) throw new InternalMisuseError("Wrong parameter type for context.");
-        if (!isObject(playerData)) throw new InternalMisuseError("Wrong parameter type for playerData.");
+        if (!Utils.isObject(playerData)) throw new InternalMisuseError("Wrong parameter type for playerData.");
 
         this.update(playerData);
         this.context = context;
+        const color = Player.colors.pop();
+        if (!Utils.isHexColor(color)) throw new InternalMisuseError("Wrong entry in for colors.");
         this.bodyColor = Player.colors.pop();
-        this.headColor = adjustColor(this.bodyColor, -66);
+        this.headColor = Utils.adjustColor(this.bodyColor, -66);
     }
 
     onDelete=()=>Player.colors.push(this.bodyColor);

@@ -53,7 +53,9 @@
                 width: 146px;
             }
         </style>
-        <script src="InternalMisuseError.js"></script>
+        <script src="Common/Config.js"></script>
+        <script src="Common/InternalMisuseError.js"></script>
+        <script src="Common/Utils.js"></script>
         <script src="Board/BoardManager.js"></script>
         <script src="Entity/Base/EntityBase.js"></script>
         <script src="Entity/FoodEntity.js"></script>
@@ -68,30 +70,18 @@
         <script src="UI/JoinForm.js"></script>
         <script src="UI/PlayerTable.js"></script>
         <script>
-            const ipToInt32 = (ip) => ip.split(".").reduce((int, v) => int * 256 + +v);
-            //const byId = document.getElementById.bind(document);
-            const byId = (id) => document.getElementById(id);
-            const adjustColor = (color, amount) => '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
-            const isHexColor = (hex) => (typeof hex != 'string' || !(hex instanceof String))
-                && hex.charAt(0) === '#'
-                && hex.length === 7
-                && Number.isInteger(Number('0x' + hex.substring(1)));
-            const isObject = (v) => (!!v) && (v.constructor === Object);
-
-
             // TODO: config
-            const IP = "127.0.0.1";
-            const PORT = "80";
             // TODO: maybe I'll go with addListener but by design I want to control the handler in a singular manner for now
             window.onload = () => {
-                const webSocket = new WebSocket("wss://"+IP+":"+PORT);
+                const byId = Utils.byId;
+                const webSocket = new WebSocket("wss://"+Config.IP+":"+Config.PORT);
 
                 // TODO: config, maybe pass these from server
                 const backgroundDesert = '#ECB978';
                 const backgroundGrass = '#458a32';
-                const backgroundSeed = ipToInt32(IP);
-                const gridSize = 30;
-                const maxPlayers = 5;
+                const backgroundSeed = Utils.ipToInt32(Config.IP);
+                const gridSize = Config.GRID_SIZE;
+                const maxPlayers = Config.MAX_CONCURRENT;
 
                 const gameData = new GameData();
 
