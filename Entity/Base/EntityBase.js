@@ -19,6 +19,11 @@ class EntityBase {
         this.gameData = gameData;
     }
 
+    draw() {
+        if (Object.getPrototypeOf(this) === EntityBase.prototype) throw new InternalMisuseError("Attempting to draw entity not yet upcasted.");
+        else throw new InternalMisuseError("Attempting to draw entity which has not overridden the draw() function.");
+    }
+
     getUpcast() {
         if (Object.getPrototypeOf(this) !== EntityBase.prototype) throw new InternalMisuseError("Attempting to upcast a child instance.");
         switch (this.entityType) {
