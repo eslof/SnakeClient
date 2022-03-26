@@ -1,6 +1,6 @@
 class PlayerType {
-    static Body = 1;
-    static Head = 2;
+    static BODY = 1;
+    static HEAD = 2;
 }
 
 class PlayerEntity extends EntityBase {
@@ -8,8 +8,8 @@ class PlayerEntity extends EntityBase {
     playerType;
 
     draw(realX, realY) {
-        if (this.playerType === PlayerType.Head) this.drawHead(realX, realY);
-        else if (this.playerType === PlayerType.Body) this.drawBody(realX, realY)
+        if (this.playerType === PlayerType.HEAD) this.drawHead(realX, realY);
+        else if (this.playerType === PlayerType.BODY) this.drawBody(realX, realY)
     }
 
     drawBody(realX, realY) {
@@ -34,9 +34,9 @@ class PlayerEntity extends EntityBase {
         realY -= size/2;
         const direction = this.direction;
         const rotateAngle = (Math.PI / 180) * (
-            direction === Direction.Left ? 90
-                : direction === Direction.Right ? 270
-                    : direction === Direction.Up ? 180
+            direction === Direction.LEFT ? 90
+                : direction === Direction.RIGHT ? 270
+                    : direction === Direction.UP ? 180
                         : 0
         );
         if (rotateAngle > 0) {

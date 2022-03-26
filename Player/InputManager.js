@@ -1,15 +1,15 @@
 class Input {
-    static None = 1;
-    static Left = 2;
-    static Right = 3;
+    static NONE = 1;
+    static LEFT = 2;
+    static RIGHT = 3;
 }
 
 class InputManager {
     keyMap = {
-        37: Input.Left, //left arrow
-        39: Input.Right, //right arrow
-        65: Input.Left, //key A
-        68: Input.Right //key D
+        37: Input.LEFT, //left arrow
+        39: Input.RIGHT, //right arrow
+        65: Input.LEFT, //key A
+        68: Input.RIGHT //key D
     };
     pressed = {};
 
@@ -17,14 +17,14 @@ class InputManager {
         if (!(webSocket instanceof WebSocket)) throw new InternalMisuseError("Wrong parameter type for webSocket.");
 
         this.webSocket = webSocket;
-        this.pressed[Input.Left] = null;
-        this.pressed[Input.Right] = null;
+        this.pressed[Input.LEFT] = null;
+        this.pressed[Input.RIGHT] = null;
     }
 
     getInput() {
-        let isLeft = this.pressed[Input.Left];
-        let isRight = this.pressed[Input.Right];
-        return isLeft && isRight ? Input.None : isLeft ?? isRight ?? Input.None;
+        let isLeft = this.pressed[Input.LEFT];
+        let isRight = this.pressed[Input.RIGHT];
+        return isLeft && isRight ? Input.NONE : isLeft ?? isRight ?? Input.NONE;
     }
 
     onKeyDown(e) {
