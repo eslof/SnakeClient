@@ -90,6 +90,7 @@
                 const boardManager = new BoardManager(backgroundDesert, canvasManager, gameData, backgroundSeed);
 
                 const joinContainerEl = byId('join-container');
+                // TODO: should we just grab the button and input from container in JoinForm?
                 const joinButtonEl = byId('join-button');
                 const joinInputEl = byId('join-input');
                 const joinForm = new JoinForm(joinContainerEl, joinButtonEl, joinInputEl, webSocket);
