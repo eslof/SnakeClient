@@ -2,15 +2,15 @@ class BoardManager {
     colorPalette = [];
     colorIndexGrid = [];
     entities = [];
-    canvasManager;
 
-    constructor(canvasManager, baseColor, seed) {
+    constructor(baseColor, canvasManager, gameData, seed) {
         const paletteCount = 7;
         const paletteSpread = 50;
         for (let i = 0; i < paletteCount; i++) {
             this.colorPalette.push(adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
         }
         this.canvasManager = canvasManager;
+        this.gameData = gameData;
         const gridSize = canvasManager.gridSize;
         //from https://gist.github.com/blixt/f17b47c62508be59987b?permalink_comment_id=2682175#gistcomment-2682175
         const LCG=s=>()=>(2**31-1&(s=Math.imul(48271,s)))/2**31;
@@ -23,9 +23,9 @@ class BoardManager {
         }
     }
 
-    update(gameData) {
+    draw() {
         const canvasManager = this.canvasManager;
-        const boardData = gameData.board;
+        const boardData = this.gameData.board;
         for (let xStr in boardData) {
             const x = parseInt(xStr);
             const realX = canvasManager.translateToRealX(x);
