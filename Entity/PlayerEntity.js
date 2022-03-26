@@ -13,8 +13,8 @@ class PlayerEntity extends EntityBase {
     }
 
     _drawBody(realX, realY) {
-        const canvasManager = this.gameData.canvasManager;
-        const players = this.gameData.playerManager.players;
+        const canvasManager = this.gameManager.canvasManager;
+        const players = this.gameManager.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
         realX -= size;
@@ -26,8 +26,8 @@ class PlayerEntity extends EntityBase {
     }
 
     _drawHead(realX, realY) {
-        const canvasManager = this.gameData.canvasManager;
-        const players = this.gameData.playerManager.players;
+        const canvasManager = this.gameManager.canvasManager;
+        const players = this.gameManager.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
         realX -= size/2;

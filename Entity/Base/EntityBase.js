@@ -13,13 +13,14 @@ class Direction {
 class EntityBase {
     direction;
     entityType;
+    gameManager;
 
-    constructor(gameData, entityData) {
+    constructor(gameManager, entityData) {
         if (Object.getPrototypeOf(this) !== EntityBase.prototype) return;
-        if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
+        if (!(gameManager instanceof GameManager)) throw new InternalMisuseError("Wrong parameter type for gameData.");
         if (!Utils.isObject(entityData)) throw new InternalMisuseError("Wrong parameter type for entityData.");
         Object.assign(this, entityData);
-        this.gameData = gameData;
+        this.gameManager = GameManager;
     }
 
     draw() {

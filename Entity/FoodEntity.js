@@ -3,8 +3,8 @@ class FoodEntity extends EntityBase {
     sizeValue;
 
     draw(realX, realY) {
-        const context = this.canvasManager.context;
-        const size = this.canvasManager.squareSize;
+        const context = this.gameManager.canvasManager.context;
+        const size = this.gameManager.canvasManager.squareSize;
         realX -= size/2;
         realY -= size/2;
         context.beginPath();
