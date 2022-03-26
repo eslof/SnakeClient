@@ -65,6 +65,10 @@
             const ipToInt32 = (ip) => ip.split(".").reduce((int, v) => int * 256 + +v);
             const byId = (id) => document.getElementById(id);
             const adjustColor = (color, amount) => '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+            const isHexColor = (hex) => (typeof hex != 'string' || !(hex instanceof String))
+                && hex.charAt(0) === '#'
+                && hex.length === 7
+                && !isNaN(Number('0x' + hex.substring(1)));
 
             // TODO: config
             const IP = "127.0.0.1";
