@@ -15,6 +15,7 @@ class EntityBase {
     entityType;
 
     constructor(gameData, entityData) {
+        if (Object.getPrototypeOf(this) !== EntityBase.prototype) return;
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
         if (!Utils.isObject(entityData)) throw new InternalMisuseError("Wrong parameter type for entityData.");
         Object.assign(this, entityData);
