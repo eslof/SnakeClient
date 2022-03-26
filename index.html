@@ -69,6 +69,7 @@
             // TODO: config
             const IP = "127.0.0.1";
             const PORT = "80";
+            // TODO: maybe I'll go with addListener but by design I want to control the handler in a singular manner for now
             window.onload = () => {
                 const websocket = new WebSocket("wss://"+IP+":"+PORT);
 
