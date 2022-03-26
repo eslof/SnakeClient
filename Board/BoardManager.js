@@ -28,6 +28,7 @@ class BoardManager {
         }
     }
 
+    // path-sensitive function
     draw() {
         const canvasManager = this.canvasManager;
         const boardData = this.gameData.board;

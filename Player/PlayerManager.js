@@ -13,6 +13,7 @@ class PlayerManager {
         this.joinForm = joinForm;
     }
 
+    // semi path-sensitive function (depending on how often the game mode updates health/score)
     update() {
         const playerData = this.gameData.players;
         this._updatePlayers(playerData);

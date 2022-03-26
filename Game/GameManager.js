@@ -12,6 +12,7 @@ class GameManager {
         this.playerManager = playerManager;
     }
 
+    // path-sensitive function
     onMessage(e) {
         const gameData = this.gameData;
         const playerManager = this.playerManager;
