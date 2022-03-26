@@ -26,7 +26,7 @@ class InputManager {
     }
 
     onKeyDown(e) {
-        const keyCode = e.keyCode || e.which;
+        const keyCode = e.keyCode || e.which; // TODO: deprecated use > e.code "ArrowLeft" et.c.
         if (!(keyCode in this.keyMap)) return;
         this.pressed[this.keyMap[keyCode]] = this.keyMap[keyCode];
         this.websocket.send(Request.getInputRequest(this.getInput()));
