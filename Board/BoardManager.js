@@ -46,7 +46,7 @@ class BoardManager {
                 }
 
                 const entityData = boardData[xStr][yStr][0]; //for now
-                this.entities[entityKey] = new EntityBase(gameData, entityData).getUpcast();
+                this.entities[entityKey] = new EntityBase(this.gameData, entityData).getUpcast();
                 this.entities[entityKey].draw(realX, realY);
             }
         }
