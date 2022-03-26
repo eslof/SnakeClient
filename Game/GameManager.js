@@ -8,6 +8,7 @@ class GameManager {
         this.joinButton = joinButton;
         this.joinInput = joinInput;
         this.websocket = websocket;
+        // todo: join stuff shouldnt be here probably
         joinButton.onclick = () => this.requestJoin();
         playerManager.onPlayerJoin = () => this.updateJoinUI();
         playerManager.onPlayerLeave = () => this.updateJoinUI();

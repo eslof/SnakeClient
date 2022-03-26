@@ -98,6 +98,7 @@
 
                 websocket.onopen = () => {
                     // TODO: shouldn't let the client spam server unless actually joined
+                    //   and join controller
                     window.onkeydown = (e) => inputManager.onKeyDown(e);
                     window.onkeyup = (e) => inputManager.onKeyUp(e);
                 };
