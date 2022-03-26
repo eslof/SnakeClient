@@ -10,6 +10,7 @@ class JoinForm {
         this.joinContainer = joinContainer;
         this.joinButton = joinButton;
         this.joinInput = joinInput;
+        joinButton.onclick = (e) => this.onClick();
     }
 
     update(isFull) {
