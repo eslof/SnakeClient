@@ -39,7 +39,6 @@ class GameManager {
     };
 
     onResize(e) {
-        console.log("hell?");
         this.canvasManager.update();
         this.canvasManager.clear();
         this.boardManager.drawFull();
