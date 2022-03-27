@@ -1,31 +1,19 @@
 class BoardManager {
-    colorPalette = [];
-    colorIndexGrid = [];
+    _colorPalette = [];
+    _colorIndexGrid;
     entities = [];
 
-    constructor(baseColor, canvasManager, gameData, seed) {
-        if (!Utils.isHexColor(baseColor)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
+    constructor(canvasManager, colorBase, colorSeed, gameData) {
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
+        if (!Utils.isHexColor(colorBase)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
+        if (!Number.isInteger(colorSeed)) throw new InternalMisuseError("Wrong parameter type for seed.");
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
-        if (!Number.isInteger(seed)) throw new InternalMisuseError("Wrong parameter type for seed.");
 
-        const paletteCount = 7;
-        const paletteSpread = 50;
-        for (let i = 0; i < paletteCount; i++) {
-            this.colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
-        }
         this.canvasManager = canvasManager;
         this.gameData = gameData;
-        const gridSize = canvasManager.gridSize;
-        //from https://gist.github.com/blixt/f17b47c62508be59987b?permalink_comment_id=2682175#gistcomment-2682175
-        const LCG=s=>()=>(2**31-1&(s=Math.imul(48271,s)))/2**31;
-        const seededRandom = LCG(seed);
-        for (let x = 0; x < gridSize; x++) {
-            this.colorIndexGrid.push([]);
-            for (let y = 0; y < gridSize; y++) {
-                this.colorIndexGrid[x].push( Math.floor(seededRandom() * this.colorPalette.length));
-            }
-        }
+        const paletteCount = 7;
+        const paletteSpread = 50;
+        this._populateColors(colorBase, paletteCount, paletteSpread, colorSeed);
     }
 
     // path-sensitive function
@@ -67,13 +55,29 @@ class BoardManager {
         }
     }
 
+    _populateColors(baseColor, paletteCount, paletteSpread, seed) {
+        for (let i = 0; i < paletteCount; i++) {
+            this._colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
+        }
+
+        const gridSize = this.canvasManager.gridSize;
+        const seededRandom = Utils.LCG(seed);
+        this._colorIndexGrid = new Array(gridSize);
+        for (let x = 0; x < gridSize; x++) {
+            this._colorIndexGrid[x] = new Uint8Array(gridSize);
+            for (let y = 0; y < gridSize; y++) {
+                this._colorIndexGrid[x][y] = Math.floor(seededRandom() * this._colorPalette.length);
+            }
+        }
+    }
+
     // path-sensitive function
     _drawBackgroundAt(gridX, gridY, realX, realY) {
         const context = this.canvasManager.context;
         const size = this.canvasManager.squareSize;
         context.beginPath();
         context.rect(realX, realY, size, size);
-        context.fillStyle = this.colorPalette[this.colorIndexGrid[gridX][gridY]];
+        context.fillStyle = this._colorPalette[this._colorIndexGrid[gridX][gridY]];
         context.fill();
     }
 }
