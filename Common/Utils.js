@@ -7,4 +7,6 @@ class Utils {
         && hex.length === 7
         && Number.isInteger(Number('0x' + hex.substring(1)));
     static isObject = (v) => (!!v) && (v.constructor === Object);
+    //from https://gist.github.com/blixt/f17b47c62508be59987b?permalink_comment_id=2682175#gistcomment-2682175
+    static LCG=s=>()=>(2**31-1&(s=Math.imul(48271,s)))/2**31;
 }
