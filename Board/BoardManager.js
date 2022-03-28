@@ -2,6 +2,7 @@ class BoardManager {
     _colorPalette = [];
     _colorIndexGrid;
     entities = [];
+    gameManager;
 
     constructor(canvasManager, colorBase, colorSeed, gameData) {
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
@@ -29,12 +30,13 @@ class BoardManager {
                 this._drawBackgroundAt(x, y, realX, realY);
                 const entityKey = xStr+'.'+yStr;
                 const entityData = boardData[xStr][yStr];
+                //TODO: we need to bring in slotType here somehow
                 if (!entityData) {
                     if (entityKey in this.entities) delete this.entities[entityKey];
                     continue;
                 }
 
-                this.entities[entityKey] = new EntityBase(this.gameData, entityData).getUpcast();
+                this.entities[entityKey] = new EntityBase(this.gameManager, entityData).getUpcast();
                 this.entities[entityKey].draw(realX, realY);
             }
         }

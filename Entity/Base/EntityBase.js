@@ -20,7 +20,7 @@ class EntityBase {
         if (!(gameManager instanceof GameManager)) throw new InternalMisuseError("Wrong parameter type for gameData.");
         if (!Utils.isObject(entityData)) throw new InternalMisuseError("Wrong parameter type for entityData.");
         Object.assign(this, entityData);
-        this.gameManager = GameManager;
+        this.gameManager = gameManager;
     }
 
     draw() {
