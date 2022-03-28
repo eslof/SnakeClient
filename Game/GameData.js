@@ -1,7 +1,8 @@
 class GameData {
     players;
     board;
+    fd;
 
     // path-sensitive function
-    update=(data)=>Object.assign(this, JSON.parse(data));
+    update=(data)=>Object.assign(this, data);
 }

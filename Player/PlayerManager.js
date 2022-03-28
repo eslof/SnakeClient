@@ -18,7 +18,6 @@ class PlayerManager {
         const playerData = this.gameData.players;
         this._updatePlayers(playerData);
         this.playerTable.update(this.players);
-        this.joinForm.update(this.players.length >= this.maxPlayers);
     }
 
     _updatePlayers() {
@@ -28,9 +27,12 @@ class PlayerManager {
             if (fd in players) players[fd].update(playerData[fd]);
             else {
                 players[fd] = new Player(playerData[fd]);
+                if (this.gameData.fd === fd || players.length >= this.maxPlayers) this.joinForm.hide();
             }
             if (players[fd].health === 0) {
                 players[fd].onDelete();
+
+                if (this.gameData.fd === fd) this.joinForm.show();
                 delete players[fd];
             }
         }

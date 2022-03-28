@@ -28,13 +28,12 @@ class BoardManager {
                 const realY = canvasManager.translateToRealY(y);
                 this._drawBackgroundAt(x, y, realX, realY);
                 const entityKey = xStr+'.'+yStr;
-
-                if (boardData[xStr][yStr].length === 0) {
-                    delete this.entities[entityKey];
+                const entityData = boardData[xStr][yStr];
+                if (!entityData) {
+                    if (entityKey in this.entities) delete this.entities[entityKey];
                     continue;
                 }
 
-                const entityData = boardData[xStr][yStr][0]; //for now
                 this.entities[entityKey] = new EntityBase(this.gameData, entityData).getUpcast();
                 this.entities[entityKey].draw(realX, realY);
             }

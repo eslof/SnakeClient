@@ -1,4 +1,8 @@
 class GameManager {
+    boardManager;
+    canvasManager;
+    gameData;
+    playerManager;
 
     constructor(boardManager, canvasManager, gameData, playerManager) {
         if (!(boardManager instanceof BoardManager)) throw new InternalMisuseError("Wrong parameter type for boardManager.");
@@ -14,10 +18,10 @@ class GameManager {
 
     // path-sensitive function
     onMessage(e) {
+        const dataObj = JSON.parse(e.data);
         const gameData = this.gameData;
-        const playerManager = this.playerManager;
-        gameData.update(e.data);
-        if (gameData.players.length > 0) playerManager.update();
+        gameData.update(dataObj);
+        if (gameData.players.length > 0) this.playerManager.update();
         if (gameData.board.length > 0) this.boardManager.draw();
     };
 
