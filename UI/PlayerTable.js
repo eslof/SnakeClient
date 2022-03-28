@@ -22,7 +22,7 @@ class PlayerTable {
         }
         // removing rows if above maxPlayer count
         for (let i = maxPlayers; i < tableElement.rows.length - maxPlayers; i++) {
-            tableElement.deleteRow(maxPlayers+i);
+            tableElement.deleteRow(maxPlayers + i);
         }
     }
 

@@ -18,18 +18,15 @@ class BoardManager {
     }
 
     // path-sensitive function
+    // todo: probably better to send x+y with entities
     draw() {
-        const canvasManager = this.canvasManager;
-        const boardData = this.gameData.board;
-        for (let xStr in boardData) {
-            const x = parseInt(xStr);
-            const realX = canvasManager.translateToRealX(x);
-            for (let yStr in boardData[xStr]) {
-                const y = parseInt(yStr);
-                const realY = canvasManager.translateToRealY(y);
+        for (let x in this.gameData.board) {
+            const realX = this.canvasManager.translateToRealX(x);
+            for (let y in this.gameData.board[x]) {
+                const realY = this.canvasManager.translateToRealY(y);
                 this._drawBackgroundAt(x, y, realX, realY);
-                const entityKey = xStr+'.'+yStr;
-                const entityData = boardData[xStr][yStr];
+                const entityKey = x + '.' + y;
+                const entityData = this.gameData.board[x][y];
                 //TODO: we need to bring in slotType here somehow
                 if (!entityData) {
                     if (entityKey in this.entities) delete this.entities[entityKey];
@@ -58,7 +55,7 @@ class BoardManager {
 
     _populateColors(baseColor, paletteCount, paletteSpread, seed) {
         for (let i = 0; i < paletteCount; i++) {
-            this._colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount-1))-(paletteSpread/2))));
+            this._colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount - 1)) - (paletteSpread / 2))));
         }
 
         const gridSize = this.canvasManager.gridSize;

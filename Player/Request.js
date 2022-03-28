@@ -14,7 +14,7 @@ class Request {
     }
 
     static getJoinRequest(name) {
-        if (typeof name != 'string' || !(name instanceof String)) throw new InternalMisuseError("Wrong parameter type for name.");
+        if (typeof name != 'string' && !(name instanceof String)) throw new InternalMisuseError("Wrong parameter type for name.");
 
         let ret = {};
         ret.request = RequestType.JOIN;

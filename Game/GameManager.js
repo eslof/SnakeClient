@@ -21,9 +21,9 @@ class GameManager {
         const dataObj = JSON.parse(e.data);
         const gameData = this.gameData;
         gameData.update(dataObj);
-        if (gameData.players?.length > 0) this.playerManager.update();
-        if (gameData.board?.length > 0) this.boardManager.draw();
-    };
+        if ('players' in dataObj) this.playerManager.update();
+        if ('board' in dataObj) this.boardManager.draw();
+    }
 
     onResize(e) {
         this.canvasManager.update();

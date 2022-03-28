@@ -4,5 +4,5 @@ class GameData {
     fd;
 
     // path-sensitive function
-    update=(data)=>Object.assign(this, data);
+    update = (data) => Object.assign(this, data);
 }

@@ -9,12 +9,13 @@ class CanvasManager {
         if (!Number.isInteger(gridSize)) throw new InternalMisuseError("Wrong parameter type for gridSize.");
 
         this.context = canvas.getContext('2d');
+        this.context.imageSmoothingEnabled = false;
         this.canvas = canvas;
         this.gridSize = gridSize;
         this.update();
     }
 
-    clear=()=>this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
+    clear = () => this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     update() {
         this._updateMeasurements();
@@ -41,8 +42,8 @@ class CanvasManager {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const canvas = this.canvas;
-        canvas.style.height = height+'px';
-        canvas.style.width = width+'px';
+        canvas.style.height = height + 'px';
+        canvas.style.width = width + 'px';
         canvas.setAttribute('width', width);
         canvas.setAttribute('height', height);
         canvas.width = width;
@@ -54,6 +55,6 @@ class CanvasManager {
         this.marginX = (maxGridSize - window.innerWidth) / 2;
         this.marginY = (maxGridSize - window.innerHeight) / 2;
         this.squareDistance = maxGridSize / this.gridSize;
-        this.squareSize = Math.round(this.squareDistance+1); // TODO: figure out what causes the gaps
+        this.squareSize = Math.round(this.squareDistance + 1); // TODO: figure out what causes the gaps
     }
 }

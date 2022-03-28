@@ -4,10 +4,10 @@ class EntityType {
 }
 
 class Direction {
-    static DOWN = 1;
+    static DOWN = 4; // up down reversed in canvas y+ is down
     static LEFT = 2;
     static RIGHT = 3;
-    static UP = 4;
+    static UP = 1; // +
 }
 
 class EntityBase {

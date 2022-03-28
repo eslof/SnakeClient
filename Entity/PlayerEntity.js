@@ -17,8 +17,6 @@ class PlayerEntity extends EntityBase {
         const players = this.gameManager.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
-        realX -= size;
-        realY -= size;
         context.beginPath();
         context.rect(realX, realY, size, size);
         context.fillStyle = players[this.fd].bodyColor;
@@ -30,8 +28,8 @@ class PlayerEntity extends EntityBase {
         const players = this.gameManager.playerManager.players;
         const context = canvasManager.context;
         const size = canvasManager.squareSize;
-        realX -= size/2;
-        realY -= size/2;
+        realX += size / 2;
+        realY += size / 2;
         const direction = this.direction;
         const rotateAngle = (Math.PI / 180) * (
             direction === Direction.LEFT ? 90
@@ -49,9 +47,9 @@ class PlayerEntity extends EntityBase {
         }
 
         context.beginPath();
-        context.arc(realX, realY, size/2, 0, Math.PI);
-        context.lineTo(realX-(size/2), realY-(size/2));
-        context.lineTo(realX+(size/2), realY-(size/2));
+        context.arc(realX, realY, size / 2, 0, Math.PI);
+        context.lineTo(realX - (size / 2), realY - (size / 2));
+        context.lineTo(realX + (size / 2), realY - (size / 2));
         context.closePath();
         context.fillStyle = players[this.fd].headColor;
         context.fill();
