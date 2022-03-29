@@ -32,6 +32,7 @@ class PlayerTable {
         const rows = this.playerRows;
         let i = 0;
         for (let fd in players) {
+            rows[i].style.color = players[fd].headColor;
             const rowCells = rows[i].cells;
             rowCells[0].innerHTML = players[fd].name;
             rowCells[1].innerHTML = players[fd].score;
