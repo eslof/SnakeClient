@@ -39,9 +39,8 @@ class CanvasManager {
     }
 
     _updateCanvasSize() {
-        const maxGridSize = Math.max(window.innerHeight, window.innerWidth);
-        const width = maxGridSize;//window.innerWidth;
-        const height = maxGridSize;//window.innerHeight;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
         const canvas = this.canvas;
         canvas.style.height = height + 'px';
         canvas.style.width = width + 'px';
