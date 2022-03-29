@@ -16,8 +16,9 @@ class BoardManager {
         const paletteSpread = 50;
         const backgroundDesert = '#ECB978';
         const backgroundGrass = '#458a32';
-        this._populateColors(backgroundDesert, paletteCount, paletteSpread, colorSeed);
-        this._populateColors(backgroundGrass, paletteCount, paletteSpread, colorSeed);
+        this._populatePalette(backgroundDesert, paletteCount, paletteSpread, colorSeed);
+        this._populatePalette(backgroundGrass, paletteCount, paletteSpread, colorSeed);
+        this._populateColors(paletteCount, colorSeed);
     }
 
     // path-sensitive function
