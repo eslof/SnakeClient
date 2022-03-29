@@ -18,6 +18,7 @@ body {
 }
 
 td, tr {
+    text-shadow: 1px 1px #ffffff;
     padding-right: 10px;
     padding-left: 10px;
 }
