@@ -28,8 +28,6 @@
             const byId = Utils.byId;
 
             // TODO: probably bgcolor should come from server along with gridSize and maxPlayers
-            const backgroundDesert = '#ECB978';
-            const backgroundGrass = '#458a32';
             const backgroundSeed = Utils.ipToInt32(Config.IP === "localhost" ? "127.0.0.1" : Config.IP);
             const gridSize = Config.GRID_SIZE;
             const maxPlayers = Config.MAX_CONCURRENT;
@@ -38,7 +36,7 @@
 
             const canvasEl = byId('snake-canvas');
             const canvasManager = new CanvasManager(canvasEl, gridSize);
-            const boardManager = new BoardManager(canvasManager, backgroundDesert, backgroundSeed, gameData);
+            const boardManager = new BoardManager(canvasManager, backgroundSeed, gameData);
 
             const joinContainerEl = byId('join-container');
             // TODO: should we just grab the button and input from container in JoinForm?

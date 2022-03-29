@@ -4,17 +4,20 @@ class BoardManager {
     entities = [];
     gameManager;
 
-    constructor(canvasManager, colorBase, colorSeed, gameData) {
+    constructor(canvasManager, colorSeed, gameData) {
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
         if (!Utils.isHexColor(colorBase)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
         if (!Number.isInteger(colorSeed)) throw new InternalMisuseError("Wrong parameter type for seed.");
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
-
+        noise.seed(colorSeed);
         this.canvasManager = canvasManager;
         this.gameData = gameData;
         const paletteCount = 7;
         const paletteSpread = 50;
-        this._populateColors(colorBase, paletteCount, paletteSpread, colorSeed);
+        const backgroundDesert = '#ECB978';
+        const backgroundGrass = '#458a32';
+        this._populateColors(backgroundDesert, paletteCount, paletteSpread, colorSeed);
+        this._populateColors(backgroundGrass, paletteCount, paletteSpread, colorSeed);
     }
 
     // path-sensitive function
@@ -53,18 +56,25 @@ class BoardManager {
         }
     }
 
-    _populateColors(baseColor, paletteCount, paletteSpread, seed) {
+    _populatePalette(baseColor, paletteCount, paletteSpread) {
         for (let i = 0; i < paletteCount; i++) {
             this._colorPalette.push(Utils.adjustColor(baseColor, Math.round(i * (paletteSpread / (paletteCount - 1)) - (paletteSpread / 2))));
         }
+    }
 
+    _populateColors(paletteCount, seed) {
         const gridSize = this.canvasManager.gridSize;
         const seededRandom = Utils.LCG(seed);
         this._colorIndexGrid = new Array(gridSize);
         for (let x = 0; x < gridSize; x++) {
             this._colorIndexGrid[x] = new Uint8Array(gridSize);
             for (let y = 0; y < gridSize; y++) {
-                this._colorIndexGrid[x][y] = Math.floor(seededRandom() * this._colorPalette.length);
+                const noiseValue = noise.simplex2(x / 8, y / 8);
+                if (noiseValue > 0) {
+                    this._colorIndexGrid[x][y] = paletteCount + Math.floor(seededRandom() * paletteCount)
+                } else {
+                    this._colorIndexGrid[x][y] = Math.floor(seededRandom() * paletteCount);
+                }
             }
         }
     }
