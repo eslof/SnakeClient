@@ -51,10 +51,13 @@ class CanvasManager {
     }
 
     _updateMeasurements() {
-        const maxGridSize = Math.min(window.innerHeight, window.innerWidth);
+        let maxGridSize = Math.min(window.innerHeight, window.innerWidth);
+        this.squareDistance = Math.floor(maxGridSize / this.gridSize);
+        this.squareSize = Math.ceil(maxGridSize / this.gridSize);
+        maxGridSize = this.squareDistance * this.gridSize;
         this.marginX = (maxGridSize - window.innerWidth) / 2;
         this.marginY = (maxGridSize - window.innerHeight) / 2;
-        this.squareDistance = maxGridSize / this.gridSize;
-        this.squareSize = Math.round(this.squareDistance + 1); // TODO: figure out what causes the gaps
+        //this.squareDistance = maxGridSize / this.gridSize;
+         // TODO: figure out what causes the gaps
     }
 }
