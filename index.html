@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="UI/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <script src="Common/Config.js"></script>
     <script src="Common/InternalMisuseError.js"></script>
     <script src="Common/Utils.js"></script>
@@ -18,6 +18,7 @@
     <script src="Player/Player.js"></script>
     <script src="Player/PlayerManager.js"></script>
     <script src="Player/Request.js"></script>
+    <script src="UI/ConnectForm.js"></script>
     <script src="UI/JoinForm.js"></script>
     <script src="UI/PlayerTable.js"></script>
     <script>
@@ -25,7 +26,6 @@
         // TODO: maybe I'll go with addListener but by design I want to control the handler in a singular manner for now
         window.onload = () => {
             const byId = Utils.byId;
-            const webSocket = new WebSocket("ws://" + Config.IP + ":" + Config.PORT);
 
             // TODO: probably bgcolor should come from server along with gridSize and maxPlayers
             const backgroundDesert = '#ECB978';
@@ -44,31 +44,34 @@
             // TODO: should we just grab the button and input from container in JoinForm?
             const joinButtonEl = byId('join-button');
             const joinInputEl = byId('join-input');
-            const joinForm = new JoinForm(joinContainerEl, joinButtonEl, joinInputEl, webSocket);
 
             const playerTableEl = byId('player-table');
             const playerTable = new PlayerTable(maxPlayers, playerTableEl)
-            const inputManager = new InputManager(webSocket, window);
-            const playerManager = new PlayerManager(gameData, inputManager, joinForm, maxPlayers, playerTable);
 
-            const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager);
+            const connectContainerEl = byId('connect-container');
+            // TODO: should we just grab the button and input from container in JoinForm?
+            const connectButtonEl = byId('connect-button');
+            const connectInputEl = byId('connect-input');
+            const connectForm = new ConnectForm(connectContainerEl, connectButtonEl, connectInputEl);
+            connectButtonEl.onclick = () => {
+                connectForm.hide();
+                const webSocket = new WebSocket(connectForm.getDns());
 
-            webSocket.onmessage = (e) => gameManager.onMessage(e);
-            window.onresize = () => gameManager.onResize();
+                const joinForm = new JoinForm(joinContainerEl, joinButtonEl, joinInputEl, webSocket);
+                const inputManager = new InputManager(webSocket, window);
+                const playerManager = new PlayerManager(gameData, inputManager, joinForm, maxPlayers, playerTable);
+                const gameManager = new GameManager(boardManager, canvasManager, gameData, playerManager);
 
-            webSocket.onopen = () => {
-                // TODO: shouldn't let the client spam server unless actually joined
-                //   and join controller
-                window.onkeydown = (e) => inputManager.onKeyDown(e);
-                window.onkeyup = (e) => inputManager.onKeyUp(e);
+                webSocket.onmessage = (e) => gameManager.onMessage(e);
+                window.onresize = () => gameManager.onResize();
+
+                webSocket.onclose = webSocket.onerror = () => {
+                    connectForm.show();
+                    joinForm.hide();
+                    window.onkeydown = null;
+                    window.onkeyup = null;
+                };
             };
-
-            webSocket.onclose = () => {
-                webSocket.onopen = null;
-                webSocket.onclose = null;
-            };
-
-            //boardManager.drawFull();
         };
     </script>
 </head>
@@ -76,28 +79,7 @@
 <canvas id="snake-canvas">Your browser does not support canvas.</canvas>
 <div id="ui" style="bottom: 0; padding-bottom: 6px;">
     <table id="player-table"
-           style="float: left; display: inline-block; width:auto; margin-left: auto; text-align: left">
-        <tr style="width:auto; justify-content: center">
-        <tr>
-            <td>Player 1</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>Player 2</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>Player 3</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>Player 4</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>Player 5</td>
-            <td>0</td>
-        </tr>
+           style="float: left; display: inline-block; width:auto; margin-left: auto; text-align: left; justify-content: center">
     </table>
     <div id="join-container">
         <label for="join-input">Name </label><input id="join-input" name="name" type="text"/>

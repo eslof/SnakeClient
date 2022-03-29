@@ -24,7 +24,7 @@ class PlayerManager {
     update() {
         const playerData = this.gameData.players;
         this._updatePlayers(playerData);
-        //this.playerTable.update(this.players);
+        this.playerTable.update(this.players);
     }
 
     _updatePlayers() {

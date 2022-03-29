@@ -13,10 +13,10 @@ class JoinForm {
         joinButton.onclick = (e) => this.onClick();
     }
 
-    update(isFull) {
-        if (!(typeof isFull !== 'boolean')) throw new InternalMisuseError("Wrong parameter type for isFull.");
+    update(isVisible) {
+        if (!(typeof isVisible !== 'boolean')) throw new InternalMisuseError("Wrong parameter type for isVisible.");
 
-        if (isFull) this.hide();
+        if (isVisible) this.hide();
         else this.show();
     }
 

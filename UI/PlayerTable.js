@@ -38,7 +38,7 @@ class PlayerTable {
             i++;
         }
 
-        for (i < this.maxPlayers; i++;) {
+        for (;i < this.maxPlayers; i++) {
             const rowCells = rows[i].cells;
             rowCells[0].innerHTML = "";
             rowCells[1].innerHTML = "";
