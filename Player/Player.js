@@ -14,7 +14,7 @@ class Player {
         const color = Player.colors.pop();
         if (!Utils.isHexColor(color)) throw new InternalMisuseError("Wrong entry in for colors.");
         this.bodyColor = color;
-        this.headColor = Utils.adjustColor(color, -66);
+        this.headColor = Utils.adjustColor(color, -86);
     }
 
     onDelete = () => Player.colors.unshift(this.bodyColor);

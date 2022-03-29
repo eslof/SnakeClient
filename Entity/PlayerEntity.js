@@ -51,7 +51,10 @@ class PlayerEntity extends EntityBase {
         context.lineTo(realX - (size / 2), realY - (size / 2));
         context.lineTo(realX + (size / 2), realY - (size / 2));
         context.closePath();
-        context.fillStyle = players[this.fd].headColor;
+        const gradient = context.createLinearGradient(realX, realY - (size / 2), realX, realY + (size / 2));
+        gradient.addColorStop(1, players[this.fd].headColor);
+        gradient.addColorStop(0, players[this.fd].bodyColor);
+        context.fillStyle = gradient;
         context.fill();
         if (rotateAngle > 0) context.restore();
     }
