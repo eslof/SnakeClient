@@ -28,7 +28,6 @@
         window.onload = () => {
             const byId = Utils.byId;
 
-            // TODO: probably bgcolor should come from server along with gridSize and maxPlayers
             const backgroundSeed = Utils.ipToInt32(Config.IP === "localhost" ? "127.0.0.1" : Config.IP);
             const gridSize = Config.GRID_SIZE;
             const maxPlayers = Config.MAX_CONCURRENT;
@@ -48,7 +47,7 @@
             const playerTable = new PlayerTable(maxPlayers, playerTableEl)
 
             const connectContainerEl = byId('connect-container');
-            // TODO: should we just grab the button and input from container in JoinForm?
+            // TODO: should we just grab the button and input from container in ConnectForm?
             const connectButtonEl = byId('connect-button');
             const connectInputEl = byId('connect-input');
             const connectForm = new ConnectForm(connectContainerEl, connectButtonEl, connectInputEl);

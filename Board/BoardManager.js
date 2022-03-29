@@ -4,21 +4,21 @@ class BoardManager {
     entities = [];
     gameManager;
 
-    constructor(canvasManager, colorSeed, gameData) {
+    constructor(canvasManager, backgroundSeed, gameData) {
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
-        if (!Number.isInteger(colorSeed)) throw new InternalMisuseError("Wrong parameter type for seed.");
+        if (!Number.isInteger(backgroundSeed)) throw new InternalMisuseError("Wrong parameter type for backgroundSeed.");
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
 
-        noise.seed(colorSeed);
+        noise.seed(backgroundSeed);
         this.canvasManager = canvasManager;
         this.gameData = gameData;
         const paletteCount = 7;
         const paletteSpread = 50;
         const backgroundDesert = '#78d1ec';
         const backgroundGrass = '#458a32';
-        this._populatePalette(backgroundDesert, paletteCount, paletteSpread, colorSeed);
-        this._populatePalette(backgroundGrass, paletteCount, paletteSpread, colorSeed);
-        this._populateColors(paletteCount, colorSeed);
+        this._populatePalette(backgroundDesert, paletteCount, paletteSpread, backgroundSeed);
+        this._populatePalette(backgroundGrass, paletteCount, paletteSpread, backgroundSeed);
+        this._populateColors(paletteCount, backgroundSeed);
     }
 
     // path-sensitive function
