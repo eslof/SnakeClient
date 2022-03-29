@@ -6,7 +6,6 @@ class JoinForm {
         if (!(webSocket instanceof WebSocket)) throw new InternalMisuseError("Wrong parameter type for webSocket.");
 
         this.webSocket = webSocket;
-        this.containerDisplayStyle = joinContainer.style.display;
         this.joinContainer = joinContainer;
         this.joinButton = joinButton;
         this.joinInput = joinInput;
@@ -27,5 +26,5 @@ class JoinForm {
     }
 
     onClick = () => this.webSocket.send(Request.getJoinRequest(this.joinInput.value));
-    show = () => this.joinContainer.style.display = this.containerDisplayStyle;
+    show = () => this.joinContainer.style.display = "inline-block";
 }

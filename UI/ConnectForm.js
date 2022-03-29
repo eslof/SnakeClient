@@ -4,7 +4,6 @@ class ConnectForm {
         if (!(connectButton instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for connectButton.");
         if (!(connectInput instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for connectInput.");
 
-        this.containerDisplayStyle = connectContainer.style.display;
         this.connectContainer = connectContainer;
         this.connectButton = connectButton;
         this.connectInput = connectInput;
@@ -27,5 +26,5 @@ class ConnectForm {
         this.connectContainer.style.display = "none";
     }
 
-    show = () => this.connectContainer.style.display = this.containerDisplayStyle;
+    show = () => this.connectContainer.style.display = "inline-block";
 }
