@@ -3,7 +3,6 @@ class ConnectForm {
         if (!(connectContainer instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for connectContainer.");
         if (!(connectButton instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for connectButton.");
         if (!(connectInput instanceof HTMLElement)) throw new InternalMisuseError("Wrong parameter type for connectInput.");
-        if (!(webSocket instanceof WebSocket)) throw new InternalMisuseError("Wrong parameter type for webSocket.");
 
         this.containerDisplayStyle = connectContainer.style.display;
         this.connectContainer = connectContainer;
