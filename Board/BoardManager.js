@@ -6,9 +6,9 @@ class BoardManager {
 
     constructor(canvasManager, colorSeed, gameData) {
         if (!(canvasManager instanceof CanvasManager)) throw new InternalMisuseError("Wrong parameter type for canvasManager.");
-        if (!Utils.isHexColor(colorBase)) throw new InternalMisuseError("Wrong parameter type for baseColor.");
         if (!Number.isInteger(colorSeed)) throw new InternalMisuseError("Wrong parameter type for seed.");
         if (!(gameData instanceof GameData)) throw new InternalMisuseError("Wrong parameter type for gameData.");
+
         noise.seed(colorSeed);
         this.canvasManager = canvasManager;
         this.gameData = gameData;
