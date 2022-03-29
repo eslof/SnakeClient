@@ -28,7 +28,6 @@
         window.onload = () => {
             const byId = Utils.byId;
 
-            const backgroundSeed = Utils.ipToInt32(Config.IP === "localhost" ? "127.0.0.1" : Config.IP);
             const gridSize = Config.GRID_SIZE;
             const maxPlayers = Config.MAX_CONCURRENT;
 
@@ -36,6 +35,8 @@
 
             const canvasEl = byId('snake-canvas');
             const canvasManager = new CanvasManager(canvasEl, gridSize);
+
+            const backgroundSeed = 1337;//Utils.ipToInt32(Config.IP === "localhost" ? "127.0.0.1" : Config.IP);
             const boardManager = new BoardManager(canvasManager, backgroundSeed, gameData);
 
             const joinContainerEl = byId('join-container');
