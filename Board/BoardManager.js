@@ -14,7 +14,7 @@ class BoardManager {
         this.gameData = gameData;
         const paletteCount = 7;
         const paletteSpread = 50;
-        const backgroundDesert = '#ECB978';
+        const backgroundDesert = '#78d1ec';
         const backgroundGrass = '#458a32';
         this._populatePalette(backgroundDesert, paletteCount, paletteSpread, colorSeed);
         this._populatePalette(backgroundGrass, paletteCount, paletteSpread, colorSeed);
@@ -70,8 +70,8 @@ class BoardManager {
         for (let x = 0; x < gridSize; x++) {
             this._colorIndexGrid[x] = new Uint8Array(gridSize);
             for (let y = 0; y < gridSize; y++) {
-                const noiseValue = noise.simplex2(x / 8, y / 8);
-                if (noiseValue > 0) {
+                const noiseValue = noise.simplex2(x / gridSize*2, y / gridSize*2);
+                if (noiseValue > -.25) {
                     this._colorIndexGrid[x][y] = paletteCount + Math.floor(seededRandom() * paletteCount)
                 } else {
                     this._colorIndexGrid[x][y] = Math.floor(seededRandom() * paletteCount);
