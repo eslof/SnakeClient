@@ -64,6 +64,7 @@
 
                 webSocket.onmessage = (e) => gameManager.onMessage(e);
                 window.onresize = () => gameManager.onResize();
+                webSocket.onopen = () => joinForm.show();
 
                 webSocket.onclose = webSocket.onerror = () => {
                     connectForm.show();
