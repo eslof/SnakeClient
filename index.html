@@ -36,6 +36,7 @@
             const canvasEl = byId('snake-canvas');
             const canvasManager = new CanvasManager(canvasEl, gridSize);
 
+            //todo: move generation of colors so we can use server as seed (so it's unique but every player on the same server gets the same seed)
             const backgroundSeed = 1337;//Utils.ipToInt32(Config.IP === "localhost" ? "127.0.0.1" : Config.IP);
             const boardManager = new BoardManager(canvasManager, backgroundSeed, gameData);
 
