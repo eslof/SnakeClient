@@ -11,7 +11,7 @@ class ConnectForm {
     }
 
     getDns() {
-        return "ws://"+this.connectInput.ariaValueMax;
+        return "ws://"+this.connectInput.value;
     }
 
     update(isConnected) {
