@@ -17,6 +17,7 @@ class InputManager {
     constructor(webSocket, window) {
         if (!(webSocket instanceof WebSocket)) throw new InternalMisuseError("Wrong parameter type for webSocket.");
         if (!(window instanceof Window)) throw new InternalMisuseError("Wrong parameter type for window.");
+
         this.webSocket = webSocket;
     }
 
