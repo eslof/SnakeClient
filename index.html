@@ -64,9 +64,13 @@
 
                 webSocket.onmessage = (e) => gameManager.onMessage(e);
                 window.onresize = () => gameManager.onResize();
-                webSocket.onopen = () => joinForm.show();
+                webSocket.onopen = () => {
+                    Log.Message("Connection opened.");
+                    joinForm.show();
+                }
 
                 webSocket.onclose = webSocket.onerror = () => {
+                    Log.Message("Connection closed or error.");
                     connectForm.show();
                     joinForm.hide();
                     window.onkeydown = null;

@@ -35,11 +35,13 @@ class PlayerManager {
             const isLocalPlayer = this.gameData.fd === fd;
             if (fd in players) players[fd].update(playerData[i]);
             else {
+                Log.Message("New player added to game with id: "+fd);
                 players[fd] = new Player(playerData[i]);
                 if (isLocalPlayer) this.inputManager.startListen();
                 if (isLocalPlayer || players.length >= this.maxPlayers) this.joinForm.hide();
             }
             if (players[fd].health === 0) {
+                Log.Message("Player death with id: "+fd);
                 players[fd].onDelete();
                 if (isLocalPlayer) {
                     this.inputManager.stopListen();
