@@ -54,6 +54,7 @@
             const connectInputEl = byId('connect-input');
             const connectForm = new ConnectForm(connectContainerEl, connectButtonEl, connectInputEl);
             connectButtonEl.onclick = () => {
+                Log.Message("Connecting to: "+connectInputEl.value);
                 connectForm.hide();
                 const webSocket = new WebSocket(connectForm.getDns());
 
